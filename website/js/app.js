@@ -44,5 +44,5 @@ async function loadMarkdown(url, elementId) {
  */
 function getCurrentWeek() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('week') || 'week01'; // デフォルトは week01
+    return params.get('week') || 'week01_variable'; // デフォルトは week01_variable
 }

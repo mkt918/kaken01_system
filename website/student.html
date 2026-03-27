@@ -33,11 +33,10 @@
         
         <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="nav-syllabus">
             <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-4">Step 1: Python基礎</div>
-            <a href="?week=week01" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week01">W1: 変数とデータ型</a>
-            <a href="?week=week03" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week03">W3: 条件分岐とインデント</a>
-            
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-6">Step 2: SQL基礎</div>
-            <a href="?week=week09" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week09">W9: 全てのデータを表示</a>
+            <a href="?week=week01_variable" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week01_variable">W1: 変数とデータ型</a>
+            <a href="?week=week02_input" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week02_input">W2: 入力と計算</a>
+            <a href="?week=week03_if1" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week03_if1">W3: 条件分岐とインデント</a>
+            <a href="?week=week04_if2" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-blue-50 hover:text-blue-600" data-week="week04_if2">W4: 複数条件と比較</a>
         </nav>
         
         <div class="p-4 border-t border-slate-100 flex items-center bg-slate-50">
@@ -74,8 +73,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const week = getCurrentWeek();
-            // Markdownの読み込み
-            loadMarkdown(`content/student/${week}.md`, 'content-area');
+            // Markdownの読み込みパスを新構造に変更
+            loadMarkdown(`content/${week}/student.md`, 'content-area');
 
             // アクティブなリンクのスタイリング
             document.querySelectorAll('.week-link').forEach(link => {

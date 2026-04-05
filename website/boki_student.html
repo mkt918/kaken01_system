@@ -16,12 +16,17 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         pre { color: #e2e8f0; }
         pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
+        /* テーブルのスマホ対応 */
+        #markdown-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     </style>
 </head>
 <body class="text-gray-800 antialiased flex h-screen overflow-hidden">
 
+    <!-- モバイルオーバーレイ -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
     <!-- サイドバー -->
-    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-10 hidden md:flex">
+    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-30 fixed md:relative -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
         <div class="p-6 border-b border-slate-100">
             <h2 class="text-xl font-bold tracking-tight text-green-600 flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -80,7 +85,7 @@
                        prose-table:text-sm prose-th:bg-slate-100 prose-th:font-semibold prose-td:border prose-td:border-slate-200
                        prose-blockquote:border-l-green-400 prose-blockquote:bg-green-50 prose-blockquote:py-1 prose-blockquote:not-italic
                        prose-ul:text-slate-600 prose-li:marker:text-green-500
-                       bg-white rounded-2xl shadow-sm border border-slate-100 p-8 md:p-10
+                       bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-8 md:p-10
                 ">
                 <!-- ウェルカム画面 -->
                 <div class="text-center py-12">
@@ -113,6 +118,20 @@
     </main>
 
     <script>
+        // モバイルメニュートグル
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
         // URLパラメータからweekを取得してMarkdownを読み込む
         function getCurrentWeek() {
             const params = new URLSearchParams(window.location.search);
@@ -135,6 +154,11 @@
                     link.classList.remove('bg-green-50', 'text-green-700', 'font-semibold');
                     link.classList.add('text-slate-600');
                 }
+                // スマホでリンク選択時にメニューを閉じる
+                link.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                });
             });
         }
 

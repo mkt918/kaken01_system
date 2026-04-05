@@ -132,14 +132,9 @@
             overlay.classList.add('hidden');
         });
 
-        // URLパラメータからweekを取得してMarkdownを読み込む
-        function getCurrentWeek() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('week');
-        }
-
         function loadBokiContent() {
-            const week = getCurrentWeek();
+            // app.jsのgetCurrentWeek()はデフォルト値があるため直接取得
+            const week = new URLSearchParams(window.location.search).get('week');
             if (!week) return;
 
             const url = `content/${week}/student.md`;

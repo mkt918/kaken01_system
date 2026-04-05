@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx markdownlint-cli \"website/content/week09_sqlinite/*.md\" \"website/content/week10_select1/*.md\" \"website/content/week11_select2/*.md\" \"website/content/week12_update/*.md\")",
+      "Bash(npx markdownlint-cli \"website/content/week01_variable/*.md\" \"website/content/week02_input/*.md\" \"website/content/week03_if1/*.md\" \"website/content/week04_if2/*.md\" \"website/content/week05_while/*.md\" \"website/content/week06_for/*.md\" \"website/content/week07_list/*.md\" \"website/content/week08_function/*.md\" \"website/content/week09_sqlinite/*.md\" \"website/content/week10_select1/*.md\" \"website/content/week11_select2/*.md\" \"website/content/week12_update/*.md\")",
+      "Bash(npx markdownlint-cli \"website/content/week01_variable/student.md\" \"website/content/week02_input/student.md\" \"website/content/week03_if1/student.md\" \"website/content/week05_while/student.md\" \"website/content/week06_for/student.md\" \"website/content/week07_list/student.md\" \"website/content/week08_function/student.md\")",
+      "Bash(grep -n \"ドリル\\\\|問題\\\\|例題\" C:/Program2/T/kaken01_system/website/content/boki_week*/student.md)",
+      "Bash(curl -fsSL \"https://raw.githubusercontent.com/leeguooooo/claude-code-usage-bar/main/web-install.sh\")",
+      "Bash(bash)",
+      "Bash(claude-statusbar:*)",
+      "Bash(cs:*)",
+      "Bash(claude:*)",
+      "Skill(keybindings-help)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash(git push*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '--- デプロイ状況 ---' && gh run list --limit 3 --repo mkt918/kaken01_system 2>/dev/null || echo 'gh コマンドが利用できません'",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

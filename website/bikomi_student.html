@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビジネスコミュニケーション 生徒用教材 - 学習ポータル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js" defer></script>
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        pre { color: #e2e8f0; }
+        pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
+        #markdown-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex h-screen overflow-hidden">
+
+    <!-- モバイルオーバーレイ -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
+    <!-- サイドバー -->
+    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-30 fixed md:relative -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="p-6 border-b border-slate-100">
+            <h2 class="text-xl font-bold tracking-tight text-orange-500 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                ビジコミ 生徒モード
+            </h2>
+            <a href="bikomi.html" class="text-xs text-slate-500 hover:text-slate-800 mt-2 inline-block">← ビジコミトップへ戻る</a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="nav-syllabus">
+            <!-- 第1章 -->
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-4">第1章: 組織とビジネス</div>
+            <a href="?week=bikomi_week01" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-orange-50 hover:text-orange-500" data-week="bikomi_week01">W1: 組織とビジネスの仕組み</a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100 flex items-center bg-slate-50">
+            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 font-bold text-sm">生</div>
+            <span class="ml-3 text-sm font-medium text-slate-700">受講生</span>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 bg-slate-50 overflow-y-auto w-full">
+        <!-- スマホ用ヘッダー -->
+        <div class="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <h2 class="text-lg font-bold text-orange-500">ビジコミ 生徒モード</h2>
+            <button id="menu-toggle" class="text-slate-500 hover:text-slate-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- コンテンツ表示エリア -->
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <article
+                id="markdown-content"
+                class="prose prose-slate prose-lg max-w-none
+                       prose-headings:font-bold prose-headings:text-slate-800
+                       prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2 prose-h2:mt-8
+                       prose-h3:text-xl prose-h3:text-slate-700
+                       prose-p:text-slate-600 prose-p:leading-relaxed
+                       prose-strong:text-slate-800
+                       prose-code:bg-slate-100 prose-code:text-orange-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+                       prose-pre:bg-slate-800 prose-pre:rounded-xl prose-pre:shadow-lg
+                       prose-table:text-sm prose-th:bg-slate-100 prose-th:font-semibold prose-td:border prose-td:border-slate-200
+                       prose-blockquote:border-l-orange-400 prose-blockquote:bg-orange-50 prose-blockquote:py-1 prose-blockquote:not-italic
+                       prose-ul:text-slate-600 prose-li:marker:text-orange-400
+                       bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-8 md:p-10
+                ">
+                <!-- ウェルカム画面 -->
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-800 mb-3">ビジネスコミュニケーションへようこそ！</h1>
+                    <p class="text-slate-500 text-lg mb-8">左のメニューから学習したいWeekを選んでください。</p>
+                    <div class="grid grid-cols-1 gap-4 max-w-sm mx-auto text-left">
+                        <a href="?week=bikomi_week01" class="block p-4 bg-orange-50 rounded-xl border border-orange-100 hover:border-orange-300 transition-colors">
+                            <div class="text-xs text-orange-500 font-semibold mb-1">W1 第1章</div>
+                            <div class="text-sm font-medium text-slate-700">組織とビジネスの仕組み</div>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        function loadBikomiContent() {
+            const week = new URLSearchParams(window.location.search).get('week');
+            if (!week) return;
+
+            const url = `content/${week}/student.md`;
+            loadMarkdown(url, 'markdown-content');
+
+            document.querySelectorAll('.week-link').forEach(link => {
+                if (link.dataset.week === week) {
+                    link.classList.add('bg-orange-50', 'text-orange-600', 'font-semibold');
+                    link.classList.remove('text-slate-600');
+                } else {
+                    link.classList.remove('bg-orange-50', 'text-orange-600', 'font-semibold');
+                    link.classList.add('text-slate-600');
+                }
+                link.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                });
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadBikomiContent);
+    </script>
+</body>
+</html>

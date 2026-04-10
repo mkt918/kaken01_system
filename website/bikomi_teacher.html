@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビジネスコミュニケーション 教員用ガイド - 学習ポータル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js" defer></script>
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        pre { color: #e2e8f0; }
+        pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex h-screen overflow-hidden">
+
+    <!-- サイドバー -->
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-10 hidden md:flex">
+        <div class="p-6 border-b border-slate-100">
+            <h2 class="text-xl font-bold tracking-tight text-amber-600 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                ビジコミ 教員モード
+            </h2>
+            <a href="bikomi.html" class="text-xs text-slate-500 hover:text-slate-800 mt-2 inline-block">← ビジコミトップへ戻る</a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="nav-syllabus">
+            <!-- 第1章 -->
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-4">第1章: 組織とビジネス</div>
+            <a href="?week=bikomi_week01" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-amber-50 hover:text-amber-600" data-week="bikomi_week01">W1: 組織とビジネスの仕組み</a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100 flex items-center bg-slate-50">
+            <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">師</div>
+            <span class="ml-3 text-sm font-medium text-slate-700">教員</span>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 bg-slate-50 overflow-y-auto w-full">
+        <div class="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <h2 class="text-lg font-bold text-amber-600">ビジコミ 教員モード</h2>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <article
+                id="markdown-content"
+                class="prose prose-slate prose-lg max-w-none
+                       prose-headings:font-bold prose-headings:text-slate-800
+                       prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2 prose-h2:mt-8
+                       prose-h3:text-xl prose-h3:text-slate-700
+                       prose-p:text-slate-600 prose-p:leading-relaxed
+                       prose-strong:text-slate-800
+                       prose-code:bg-slate-100 prose-code:text-amber-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+                       prose-pre:bg-slate-800 prose-pre:rounded-xl prose-pre:shadow-lg
+                       prose-table:text-sm prose-th:bg-slate-100 prose-th:font-semibold prose-td:border prose-td:border-slate-200
+                       prose-blockquote:border-l-amber-400 prose-blockquote:bg-amber-50 prose-blockquote:py-1 prose-blockquote:not-italic
+                       prose-ul:text-slate-600
+                       bg-white rounded-2xl shadow-sm border border-slate-100 p-8 md:p-10
+                ">
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-800 mb-3">ビジコミ 教員用ガイド</h1>
+                    <p class="text-slate-500 text-lg">左のメニューから各週のガイドを選んでください。</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        function getCurrentWeek() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('week');
+        }
+
+        function loadBikomiTeacherContent() {
+            const week = getCurrentWeek();
+            if (!week) return;
+
+            const url = `content/${week}/teacher.md`;
+            loadMarkdown(url, 'markdown-content');
+
+            document.querySelectorAll('.week-link').forEach(link => {
+                if (link.dataset.week === week) {
+                    link.classList.add('bg-amber-50', 'text-amber-600', 'font-semibold');
+                    link.classList.remove('text-slate-600');
+                } else {
+                    link.classList.remove('bg-amber-50', 'text-amber-600', 'font-semibold');
+                    link.classList.add('text-slate-600');
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadBikomiTeacherContent);
+    </script>
+</body>
+</html>

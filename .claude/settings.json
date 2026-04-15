@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "C:\\Program2\\T\\kaken01_system\\website\\content"
+    ],
+    "allow": [
+      "Bash(grep -v \"^--$\")"
+    ]
+  }
+}

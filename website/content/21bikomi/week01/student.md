@@ -10,9 +10,9 @@
 | コンテンツ | リンク |
 |-----------|--------|
 | 職種クイズアプリ | [アプリを開く](https://mkt918.github.io/01bikomi_shokui/) |
-| スライド（職能別組織） | [スライドを開く](content/bikomi_week01/01bikomi職能.pdf) |
+| スライド（職能別組織） | [スライドを開く](content/21bikomi/week01/01bikomi職能.pdf) |
 
-<iframe src="content/bikomi_week01/01bikomi職能.pdf" width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
+<iframe src="content/21bikomi/week01/01bikomi職能.pdf" width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
 
 ---
 

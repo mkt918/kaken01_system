@@ -7,9 +7,9 @@
 
 ## スライド資料
 
-<iframe src="content/genka_siryo/genka02.pdf" width="100%" height="560px" style="border:none; border-radius:8px;"></iframe>
+<iframe src="content/22genka/siryo/genka02.pdf" width="100%" height="560px" style="border:none; border-radius:8px;"></iframe>
 
-[スライドを別タブで開く](content/genka_siryo/genka02.pdf)
+[スライドを別タブで開く](content/22genka/siryo/genka02.pdf)
 
 ---
 

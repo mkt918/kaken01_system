@@ -70,6 +70,68 @@ x = int(float("3.14"))  # OK：先にfloatにしてからintに変換
 
 ---
 
+## 【重要】データ型と計算結果の違い
+
+**同じ数値でも、int か float かで計算結果が大きく変わります！**
+
+### Case 1: 税金計算のトラップ
+
+```python
+price = 1000
+tax_rate = 0.10
+
+# ❌ パターンA：整数で計算
+tax_int = int(price * tax_rate)      # 100.0 → 100に切り捨て
+total_int = price + tax_int           # 1100
+print(f"合計（int）：{total_int}円")    # 1100円 ✓正確
+
+# ✓ パターンB：小数で計算
+tax_float = price * tax_rate          # 100.0（そのまま）
+total_float = price + tax_float       # 1100.0
+print(f"合計（float）：{total_float}円") # 1100.0円 ✓正確
+
+# ⚠ 注意：微妙な違いが出る例
+price = 999
+tax_int = int(price * 0.10)           # 99.9 → 99に切り捨て ⚠
+total_int = price + tax_int           # 1098円（本来は1098.9円）
+```
+
+> **学習ポイント**：`int()` で変換すると **小数点以下が切り捨てられます**。金額計算では注意が必要です！
+
+### Case 2: 演算の順序も重要
+
+```python
+# 同じ計算でも、型が違うと出力形式が変わる
+value = 10
+
+# パターンA：intで計算
+result_int = value // 3               # 10 // 3 = 3（余りは切り捨て）
+print(result_int)                     # 3 ← 整数として表示
+
+# パターンB：floatで計算
+result_float = value / 3              # 10 / 3 = 3.3333...
+print(result_float)                   # 3.3333333333333335 ← 小数として表示
+
+# パターンC：計算後に型変換
+result_convert = int(value / 3)       # int(3.333...) = 3
+print(result_convert)                 # 3
+```
+
+### データ型を選ぶチェックリスト
+
+| 状況 | 選択 | 理由 |
+|------|------|------|
+| 個数・人数・枚数 | `int` | 小数は発生しない |
+| 金額（価格計算） | `float` or `int` | 端数処理まで考える必要あり |
+| 身長・体重・温度 | `float` | 小数が自然に発生 |
+| 年齢・点数 | `int` | 通常は整数で十分 |
+| 計算の中途結果 | `float` | 精度を保つため |
+| 最終表示値 | 用途で決定 | 「何を表示するか」で決める |
+
+---
+
+---
+
 ## レッスン 3: Pythonの演算子まとめ
 
 | 演算子 | 意味 | 例 | 結果 |
@@ -114,22 +176,54 @@ score2 = int(input("2教科目の点数: "))
 score3 = int(input("3教科目の点数: "))
 
 average = (score1 + score2 + score3) / 3
-print(f"平均点：{average:.1f}点")
+print(f"平均点：{average:.1f}点")  # 小数第1位まで表示
 ```
 
-### 税込価格を計算する
+### 税込価格を計算する ★型の選択が重要！
 
 ```python
 price = int(input("商品の価格（円）: "))
 tax_rate = 0.10
 
-tax = int(price * tax_rate)
+tax = int(price * tax_rate)  # ⚠ ここで int() を使う理由：「端数は円単位で切り捨て」
 total = price + tax
 
 print(f"本体価格：{price}円")
-print(f"消費税  ：{tax}円")
+print(f"消費税  ：{tax}円")    # 税金は整数の円で表示するため
 print(f"税込合計：{total}円")
 ```
+
+#### この計算で何が起きるか
+
+```
+例：商品価格 999円の場合
+①  price * tax_rate = 999 * 0.10 = 99.9
+②  int(99.9) = 99  ← 小数点以下が切り捨てられる！
+③  total = 999 + 99 = 1098円
+
+⚠ 注意：int()を使わないと...
+  tax = 99.9（小数）→ 表示が「99.9円」になって不自然
+```
+
+#### 代替案：小数で計算しておく
+
+```python
+price = int(input("商品の価格（円）: "))
+tax_rate = 0.10
+
+tax = price * tax_rate         # 小数のまま計算
+total = price + tax
+
+print(f"本体価格：{price}円")
+print(f"消費税  ：{tax:.0f}円")  # 小数第0位で表示（整数のように見える）
+print(f"税込合計：{total:.0f}円")
+```
+
+> **どちらを選ぶ？**
+> - **int()版**：税金は必ず整数円（シンプル、実務的）
+> - **float版**：計算過程で精度を保つ（数学的に正確）
+> 
+> 実務では **int()版** がよく使われます。
 
 ---
 
@@ -227,7 +321,7 @@ float変換：25.0
 
 ---
 
-## ドリル 2-4: バグを直せ！
+## ドリル 2-4: バグを直せ！ ★重要：型変換を理解しよう
 
 以下のプログラムには2か所バグがあります。直してください。
 
@@ -250,26 +344,52 @@ print(f"消費税: {tax}円")
 バグ2: count = input(...)   → count = int(input(...))
 ```
 
-`input()` は文字列を返すため、数値計算の前に `int()` で変換が必要。
+#### なぜバグが生じるのか？
+
+もしバグのままだと...
+
+```python
+price = input("値段を入力: ")     # price = "150" （文字列）
+count = input("個数を入力: ")     # count = "3"   （文字列）
+
+total = price * count             # "150" * "3" = "150150150" ⚠ 掛け算ではなく繰り返し！
+tax = total * 0.1                 # TypeError！（文字列に 0.1 は掛けられない）
+```
+
+#### 正しい修正方法
 
 修正後：
 
 ```python
-price = int(input("値段を入力: "))
-count = int(input("個数を入力: "))
+price = int(input("値段を入力: "))    # price = 150 （整数）
+count = int(input("個数を入力: "))    # count = 3   （整数）
 
-total = price * count
-tax = total * 0.1
+total = price * count                 # 150 * 3 = 450 ✓ 正しい計算
+tax = int(total * 0.1)                # 45 （消費税は整数で）
 
 print(f"合計（税抜）: {total}円")
 print(f"消費税: {tax}円")
 ```
 
+実行結果：
+
+```
+値段を入力: 150
+個数を入力: 3
+合計（税抜）: 450円
+消費税: 45円
+```
+
+> **重要ポイント**：
+> - `input()` は **常に文字列** を返す
+> - 数値計算する前に、必ず `int()` または `float()` で変換する
+> - 型変換を忘れると、予期しない結果や**エラー**が発生する
+
 </details>
 
 ---
 
-## ドリル 2-5: 3教科の成績を処理しよう
+## ドリル 2-5: 3教科の成績を処理しよう ★型の使い分け
 
 国語・数学・英語の点数を入力し、以下を出力するプログラムを作ってください。
 
@@ -290,23 +410,42 @@ print(f"消費税: {tax}円")
 <summary>解答例を見る</summary>
 
 ```python
-kokugo = int(input("国語の点数: "))
+kokugo = int(input("国語の点数: "))     # 点数は整数で受け取る
 math = int(input("数学の点数: "))
 eigo = int(input("英語の点数: "))
 
-total = kokugo + math + eigo
-average = total / 3
+total = kokugo + math + eigo             # int + int + int = int（合計は整数）
+average = total / 3                      # int / 3 = float（平均は小数になる）
 
 print("-----")
-print(f"合計：{total}点")
-print(f"平均：{average:.1f}点")
+print(f"合計：{total}点")                 # 整数として表示
+print(f"平均：{average:.1f}点")           # 小数第1位まで表示
 ```
+
+#### 型が変わる様子
+
+```
+kokugo = 75 (int)
+math = 90 (int)
+eigo = 82 (int)
+
+total = 75 + 90 + 82 = 247 (int のまま)
+average = 247 / 3 = 82.33333... (float に変わる！)
+
+出力時に {average:.1f} で小数第1位までに調整
+→ 82.3 と表示される
+```
+
+> **注意**：計算の途中で型が変わることがあります。
+> - `int / int` = `float`（割り算の結果は小数）
+> - `int // int` = `int`（整数割りは整数）
+> - `int * int` = `int`（掛け算は整数のまま）
 
 </details>
 
 ---
 
-## ミニプロジェクト: BMI計算機を作ろう
+## ミニプロジェクト: BMI計算機を作ろう ★float が必須な理由
 
 身長と体重を入力してもらい、BMIを計算して判定するプログラムを作ります。
 
@@ -343,7 +482,7 @@ BMI : 22.49
 
 ```python
 print("=== BMI 計算機 ===")
-height_cm = float(input("身長(cm)を入力: "))
+height_cm = float(input("身長(cm)を入力: "))  # ⚠ float が必須！小数を受け取る
 weight = float(input("体重(kg)を入力: "))
 
 height_m = height_cm / 100
@@ -360,6 +499,25 @@ print(f"BMI : {bmi:.2f}")
 # elif bmi < 30:  判定 = 過体重
 # else:           判定 = 肥満
 ```
+
+#### なぜ float を使う？
+
+もし `int()` を使ったら...
+
+```python
+# ❌ 間違った方法：int を使う
+height_cm = int(input("身長(cm)を入力: "))  # 170.5 → 170 に切り捨て ⚠
+weight = int(input("体重(kg)を入力: "))     # 65.5 → 65 に切り捨て ⚠
+
+# 計算結果が大きく変わってしまう！
+bmi = weight / height_m / height_m  # 値が不正確
+
+# ✓ 正しい方法：float を使う
+height_cm = float(input("身長(cm)を入力: "))  # 170.5 → 170.5 （正確）
+weight = float(input("体重(kg)を入力: "))     # 65.5 → 65.5 （正確）
+```
+
+> **重要**：小数が自然に発生する値（身長・体重・温度など）は、**必ず `float()` で受け取る**！
 
 </details>
 

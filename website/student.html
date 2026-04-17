@@ -22,6 +22,8 @@
         pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
         /* テーブルのスマホ対応 */
         #content-area table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* コードのコピー禁止 */
+        #content-area pre, #content-area code { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
     </style>
 </head>
 <body class="text-gray-800 antialiased flex h-screen overflow-hidden">
@@ -139,6 +141,21 @@
                     sidebar.classList.add('-translate-x-full');
                     overlay.classList.add('hidden');
                 });
+            });
+
+            // コードのコピー禁止
+            const contentArea = document.getElementById('content-area');
+            contentArea.addEventListener('copy', (e) => {
+                const selection = window.getSelection();
+                const selectedElement = selection.anchorNode?.parentElement;
+                if (selectedElement?.closest('pre, code')) {
+                    e.preventDefault();
+                }
+            });
+            contentArea.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('pre, code')) {
+                    e.preventDefault();
+                }
             });
         });
     </script>

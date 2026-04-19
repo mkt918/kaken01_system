@@ -73,16 +73,55 @@ SELECT 列名1, 列名2, 列名3 FROM テーブル名;
 | `*` | 「全部」という意味（すべての列を取出） |
 | `FROM` | 「どのテーブルから」という区切り言葉 |
 
+### ⚠️ よくあるミス
+
+```sql
+❌ ミス1：複数列を指定するのに AND を使う
+SELECT name AND type FROM monsters;
+              ↑ これはNG、カンマを使う
+
+✓ 正しい：複数列はカンマで区切る
+SELECT name, type FROM monsters;
+
+❌ ミス2：FROM を忘れる
+SELECT name, type;
+        ↑ テーブルがわからない
+
+✓ 正しい：必ず FROM テーブル名 をつける
+SELECT name, type FROM monsters;
+```
+
 ### ✍️ ドリル 1-1：名前と属性
 
 `monsters` テーブルから、「名前（`name`）」と「属性（`type`）」の2つの列だけを抽出して表示してください。
 
 ```sql
-/* ここに SELECT 文を書こう！ */
 SELECT name, type FROM monsters;
 ```
 
-> **確認：** 4匹のモンスターの名前と属性（炎・水・土）が表示されましたか？
+> **確認チェック：**
+> - [ ] 4匹のモンスターの名前と属性（炎・水・土）が表示された？
+> - [ ] FROM monsters を忘れずに書けた？
+
+### ✍️ ドリル 1-2：生徒の名前と学年
+
+`students` テーブルから、全員の「名前（`name`）」と「学年（`grade`）」だけを表示してください。
+
+```sql
+SELECT name, grade FROM students;
+```
+
+> **期待結果：** たろう（1年）、はなこ（2年）、さぶろう（1年）
+
+### ✍️ ドリル 1-3：ID と HP だけを見たい
+
+`monsters` テーブルから、「ID（`id`）」と「HP（`hp`）」の2つの列だけを表示してください。
+
+```sql
+SELECT id, hp FROM monsters;
+```
+
+> **期待結果：** 4匹すべてのIDとHPが表示される
 
 ---
 
@@ -159,6 +198,25 @@ SELECT * FROM students WHERE grade = 1;
 SELECT * FROM monsters WHERE type = '炎';
 ```
 
+### ⚠️ WHERE のよくあるミス（BEST 3）
+
+```sql
+❌ ミス1：数字を引用符で囲む
+SELECT * FROM students WHERE grade = '1';
+                                      ↑ 数字は引用符なし
+
+✓ 正しい：数字は引用符なし
+SELECT * FROM students WHERE grade = 1;
+
+❌ ミス2：WHERE なしで条件を書く
+SELECT name FROM monsters WHERE hp >= 100
+                             ↑ これがないと全データ表示される
+
+❌ ミス3：複数条件を AND/OR なしで書く
+WHERE hp > 100 type = '炎';
+             ↑ AND を忘れている
+```
+
 ### ✍️ ドリル 2-1：属性で絞り込む
 
 `type` が `'炎'` のモンスターだけを抽出して、名前と属性を表示してください。
@@ -169,15 +227,45 @@ FROM monsters
 WHERE type = '炎';
 ```
 
-**ステップバイステップ：**
-1. 全モンスターを見る：`SELECT * FROM monsters;`
-2. 条件を追加：`WHERE type = '炎'`
-3. 必要な列だけ：`SELECT name, type`
-
 > **確認チェック：**
 > - [ ] フレイムとドラゴンの2匹だけが表示された？
 > - [ ] `'炎'` のようにシングルクォーテーションで囲めた？
-> - [ ] `WHERE` の条件は正しい？
+
+### ✍️ ドリル 2-2：HP が高いモンスターを探す
+
+`monsters` テーブルから、HPが100より大きいモンスターの「名前」と「HP」を表示してください。
+
+```sql
+SELECT name, hp
+FROM monsters
+WHERE hp > 100;
+```
+
+> **期待結果：** フレイム（120）、ドラゴン（500）
+
+### ✍️ ドリル 2-3：1年生を探す
+
+`students` テーブルから、学年（`grade`）が1の生徒の「名前」と「学年」を表示してください。
+
+```sql
+SELECT name, grade
+FROM students
+WHERE grade = 1;
+```
+
+> **期待結果：** たろう、さぶろう（1年生 2人）
+
+### ✍️ ドリル 2-4：体重が60kg 以下の人
+
+`health_data` テーブルから、体重が60kg以下の人の「名前」と「体重」を表示してください。
+
+```sql
+SELECT name, weight
+FROM health_data
+WHERE weight <= 60;
+```
+
+> **期待結果：** なかむら（50kg）、すずき（62kg）... 条件に合う人を探す
 
 ---
 
@@ -246,6 +334,27 @@ SELECT 列名 FROM テーブル名 ORDER BY 並べ替え対象の列 DESC;
 > - `DESC`：1位（高い）から下へ = 大きい順
 > - `ASC`：最下位（低い）から上へ = 小さい順
 
+### ⚠️ ORDER BY のよくあるミス（BEST 3）
+
+```sql
+❌ ミス1：ASC/DESC を忘れる
+SELECT * FROM monsters ORDER BY hp;
+                                 ↑ 昇順か降順がわからない
+
+✓ 正しい：必ず ASC または DESC をつける
+SELECT * FROM monsters ORDER BY hp DESC;
+
+❌ ミス2：WHERE と ORDER BY の順番が違う
+SELECT name FROM monsters ORDER BY hp WHERE hp > 100;
+                                    ↑ 順番違い！
+
+✓ 正しい：WHERE が先、ORDER BY が後
+SELECT name FROM monsters WHERE hp > 100 ORDER BY hp DESC;
+
+❌ ミス3：存在しない列で並べ替える
+ORDER BY xxx DESC;  ← xxx というカラムがない
+```
+
 ### ✍️ ドリル 3-1：身長が高い順に並べ替え
 
 `health_data` テーブルから、全員の名前と身長を、身長が高い順（`DESC`）に表示してください。
@@ -254,12 +363,45 @@ SELECT 列名 FROM テーブル名 ORDER BY 並べ替え対象の列 DESC;
 SELECT name, height FROM health_data ORDER BY height DESC;
 ```
 
-**期待される結果：** 身長の高い人から順に表示される
+> **期待結果：** 身長の高い人から順に表示される
+> - [ ] 一番身長の高い人が最初？
+> - [ ] 降順（DESC）で動作した？
 
-> **確認チェック：**
-> - [ ] `ORDER BY height DESC` と書けた？
-> - [ ] 一番身長の高い人が最初に表示された？
-> - [ ] 降順（DESC）で正しく動作した？
+### ✍️ ドリル 3-2：HPが低い順（昇順）に並べ替え
+
+`monsters` テーブルから、全モンスターの「名前」と「HP」を、HPが低い順（`ASC`）に表示してください。
+
+```sql
+SELECT name, hp
+FROM monsters
+ORDER BY hp ASC;
+```
+
+> **期待結果：** スライム（30）が最初、ドラゴン（500）が最後
+
+### ✍️ ドリル 3-3：学年が低い順に生徒を表示
+
+`students` テーブルから、全員の「名前」と「学年」を、学年が低い順（`ASC`）に表示してください。
+
+```sql
+SELECT name, grade
+FROM students
+ORDER BY grade ASC;
+```
+
+> **期待結果：** 1年生が先、2年生が後
+
+### ✍️ ドリル 3-4：体重が重い順に並べ替え
+
+`health_data` テーブルから、全員の「名前」と「体重」を、体重が重い順（`DESC`）に表示してください。
+
+```sql
+SELECT name, weight
+FROM health_data
+ORDER BY weight DESC;
+```
+
+> **期待結果：** 一番重い人から順に表示
 
 ---
 
@@ -316,7 +458,59 @@ WHERE height > 170 AND weight <= 60
 > **💡 AND の意味**
 > - `AND` = 「かつ」「両方とも」「同時に満たす」
 > - 条件1も条件2も **両方とも** クリアしたやつだけが表示される
-> - 「Aまたはどちらか」という場合は `OR` を使いますが、今週は `AND` だけ覚えましょう
+> - 条件のうち1つでも満たさなければ表示されない
+
+### ⚠️ AND のよくあるミス
+
+```sql
+❌ ミス1：AND の後ろに列名を忘れる
+WHERE hp >= 100 AND '炎';
+              ↑ '炎' だけではNG
+
+✓ 正しい：AND の後ろにも完全な条件を書く
+WHERE hp >= 100 AND type = '炎';
+
+❌ ミス2：AND で数字と文字を混ぜるときの引用符ミス
+WHERE grade = '1' AND type = 水;
+      ↑ 数字は引用符なし  ↑ 文字は引用符あり
+```
+
+### ✍️ ドリル AND-1：HPが100以上 かつ 炎属性
+
+`monsters` テーブルから、HPが100以上 **かつ** 属性が「炎」のモンスターを探してください。
+「名前」「属性」「HP」を表示してください。
+
+```sql
+SELECT name, type, hp
+FROM monsters
+WHERE hp >= 100 AND type = '炎';
+```
+
+> **期待結果：** フレイム（120）、ドラゴン（500）
+
+### ✍️ ドリル AND-2：身長が170以上 かつ 体重が65以上
+
+`health_data` テーブルから、身長が170cm以上 **かつ** 体重が65kg以上の人を探してください。
+
+```sql
+SELECT name, height, weight
+FROM health_data
+WHERE height >= 170 AND weight >= 65;
+```
+
+> **期待結果：** 両方の条件を満たす人を探す
+
+### ✍️ ドリル AND-3：2年生 かつ（応用）条件式で絞り込み
+
+`students` テーブルから、実例として、複数条件の検索を体験してください。
+
+```sql
+SELECT *
+FROM students
+WHERE grade = 2 AND name = 'はなこ';
+```
+
+> **期待結果：** はなこ（2年生）だけが表示される
 
 ---
 

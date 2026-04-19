@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プログラミング 教員用ガイド - 学習ポータル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js" defer></script>
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        pre { color: #e2e8f0; font-family: 'Monaco', 'Courier New', 'Courier', monospace !important; font-size: 14px; line-height: 1.4; }
+        pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
+        #markdown-content pre, #markdown-content code { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex h-screen overflow-hidden">
+
+    <!-- サイドバー -->
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-10 hidden md:flex">
+        <div class="p-6 border-b border-slate-100">
+            <h2 class="text-xl font-bold tracking-tight text-indigo-700 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                プログラミング 教員モード
+            </h2>
+            <a href="programming.html" class="text-xs text-slate-500 hover:text-slate-800 mt-2 inline-block">← プログラミングトップへ戻る</a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="nav-syllabus">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-4">Step 1: Python基礎</div>
+            <a href="?week=34system/week01" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week01">W1: 変数とデータ型</a>
+            <a href="?week=34system/week02" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week02">W2: 入力と計算</a>
+            <a href="?week=34system/week03" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week03">W3: 条件分岐とインデント</a>
+            <a href="?week=34system/week04" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week04">W4: 複数条件と比較</a>
+            <a href="?week=34system/week05" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week05">W5: while文と無限ループ</a>
+            <a href="?week=34system/week06" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week06">W6: forループ</a>
+            <a href="?week=34system/week07" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week07">W7: リスト</a>
+            <a href="?week=34system/week08" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week08">W8: 関数の基礎</a>
+
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-8">Step 2: SQL基礎 (DB連携)</div>
+            <a href="?week=34system/week09" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week09">W9: DBとSQLite</a>
+            <a href="?week=34system/week10" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week10">W10: データ検索 SELECT</a>
+            <a href="?week=34system/week11" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week11">W11: データ検索 LIKE/WHERE</a>
+            <a href="?week=34system/week12" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week12">W12: 更新・削除エラー</a>
+            <a href="?week=34system/week13" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week13">W13: 集計関数</a>
+            <a href="?week=34system/week14" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week14">W14: テーブル結合JOIN</a>
+
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-8">Step 3: アプリ開発＆卒業制作</div>
+            <a href="?week=34system/week15" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week15">W15: Python×DB連携1</a>
+            <a href="?week=34system/week16" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week16">W16: セキュリティ</a>
+            <a href="?week=34system/week17" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week17">W17: GUI基礎Tkinter</a>
+            <a href="?week=34system/week18" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week18">W18: フルスタックDB開発</a>
+            <a href="?week=34system/week19" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week19">W19: 卒制 企画・設計</a>
+            <a href="?week=34system/week20" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week20">W20: プロトタイプ開発</a>
+            <a href="?week=34system/week21" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week21">W21-23: もくもく会メンタリング</a>
+            <a href="?week=34system/week24" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week24">W24: 全員QAテスト</a>
+            <a href="?week=34system/week25" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week25">W25: デモ台本・リハーサル</a>
+            <a href="?week=34system/week26" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" data-week="34system/week26">W26: 成果発表会 本番！</a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100 flex items-center bg-slate-50">
+            <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm">師</div>
+            <span class="ml-3 text-sm font-medium text-slate-700">インストラクター</span>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 bg-slate-50 overflow-y-auto w-full">
+        <div class="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <h2 class="text-lg font-bold text-indigo-700">プログラミング 教員モード</h2>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <article
+                id="markdown-content"
+                class="prose prose-slate prose-lg max-w-none
+                       prose-headings:font-bold prose-headings:text-slate-800
+                       prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2 prose-h2:mt-8
+                       prose-h3:text-xl prose-h3:text-slate-700
+                       prose-p:text-slate-600 prose-p:leading-relaxed
+                       prose-strong:text-slate-800
+                       prose-code:bg-slate-100 prose-code:text-indigo-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+                       prose-pre:bg-slate-800 prose-pre:rounded-xl prose-pre:shadow-lg
+                       prose-table:text-sm prose-th:bg-slate-100 prose-th:font-semibold prose-td:border prose-td:border-slate-200
+                       prose-blockquote:border-l-indigo-400 prose-blockquote:bg-indigo-50 prose-blockquote:py-1 prose-blockquote:not-italic
+                       prose-ul:text-slate-600
+                       bg-white rounded-2xl shadow-sm border border-slate-100 p-8 md:p-10
+                ">
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-800 mb-3">プログラミング教員用ガイドへようこそ</h1>
+                    <p class="text-slate-500 text-lg mb-8">左のメニューから確認したいWeekの指導案を選んでください。</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto text-left">
+                        <h3 class="font-bold text-blue-900 mb-3">📋 このページについて</h3>
+                        <ul class="text-blue-800 text-sm space-y-2">
+                            <li>✓ 各Week の詳細な指導案・授業ポイント</li>
+                            <li>✓ ドリルの解答・解説</li>
+                            <li>✓ よくある生徒の質問と対応方法</li>
+                            <li>✓ 発展内容・応用問題の提案</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        function loadProgrammingTeacherContent() {
+            const week = new URLSearchParams(window.location.search).get('week') || '34system/week01';
+
+            const url = `content/${week}/teacher.md`;
+            loadMarkdown(url, 'markdown-content');
+
+            // ナビリンクのアクティブ状態を更新
+            document.querySelectorAll('.week-link').forEach(link => {
+                if (link.dataset.week === week) {
+                    link.classList.add('bg-indigo-50', 'text-indigo-700', 'font-semibold');
+                    link.classList.remove('text-slate-600');
+                } else {
+                    link.classList.remove('bg-indigo-50', 'text-indigo-700', 'font-semibold');
+                    link.classList.add('text-slate-600');
+                }
+                // リンク選択時にメニューを閉じる
+                link.addEventListener('click', () => {
+                    // モバイル時のみ
+                });
+            });
+
+            // コードのコピー禁止
+            const contentArea = document.getElementById('markdown-content');
+            contentArea.addEventListener('copy', (e) => {
+                const selection = window.getSelection();
+                const selectedElement = selection.anchorNode?.parentElement;
+                if (selectedElement?.closest('pre, code')) {
+                    e.preventDefault();
+                }
+            });
+            contentArea.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('pre, code')) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadProgrammingTeacherContent);
+    </script>
+</body>
+</html>

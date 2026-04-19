@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プログラミング 生徒用教材 - 学習ポータル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js" defer></script>
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        pre { color: #e2e8f0; }
+        pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; }
+        #markdown-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        #markdown-content pre { font-family: 'Monaco', 'Courier New', 'Courier', monospace !important; font-size: 14px; line-height: 1.4; }
+        #markdown-content pre, #markdown-content code { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex h-screen overflow-hidden">
+
+    <!-- モバイルオーバーレイ -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
+    <!-- サイドバー -->
+    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-30 fixed md:relative -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="p-6 border-b border-slate-100">
+            <h2 class="text-xl font-bold tracking-tight text-purple-600 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                プログラミング 生徒モード
+            </h2>
+            <a href="programming.html" class="text-xs text-slate-500 hover:text-slate-800 mt-2 inline-block">← プログラミングトップへ戻る</a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="nav-syllabus">
+            <!-- Step 1: Python基礎 -->
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-4">Step 1: Python基礎</div>
+            <a href="?week=34system/week01" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week01">W1: 変数とデータ型</a>
+            <a href="?week=34system/week02" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week02">W2: 入力と計算</a>
+            <a href="?week=34system/week03" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week03">W3: 条件分岐とインデント</a>
+            <a href="?week=34system/week04" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week04">W4: 複数条件と比較</a>
+            <a href="?week=34system/week05" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week05">W5: while文と無限ループ</a>
+            <a href="?week=34system/week06" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week06">W6: forループ</a>
+            <a href="?week=34system/week07" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week07">W7: リスト</a>
+            <a href="?week=34system/week08" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week08">W8: 関数の基礎</a>
+
+            <!-- Step 2: SQL基礎 -->
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-8">Step 2: SQL基礎 (DB連携)</div>
+            <a href="?week=34system/week09" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week09">W9: データベースとSQLite</a>
+            <a href="?week=34system/week10" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week10">W10: データ検索 (SELECT)</a>
+            <a href="?week=34system/week11" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week11">W11: データ検索 (LIKE/WHERE)</a>
+            <a href="?week=34system/week12" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week12">W12: 更新・削除の恐怖体験</a>
+            <a href="?week=34system/week13" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week13">W13: 集計関数とGROUP BY</a>
+            <a href="?week=34system/week14" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week14">W14: テーブル結合 (JOINゲーム)</a>
+
+            <!-- Step 3: 卒業制作フェーズ -->
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-8">Step 3: アプリ開発＆卒業制作</div>
+            <a href="?week=34system/week15" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week15">W15: Python×DB連携1</a>
+            <a href="?week=34system/week16" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week16">W16: ハッキングと防御</a>
+            <a href="?week=34system/week17" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week17">W17: GUI基礎 (Tkinter)</a>
+            <a href="?week=34system/week18" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week18">W18: GUI×DB フルスタック</a>
+            <a href="?week=34system/week19" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week19">W19: 卒業制作 企画・設計</a>
+            <a href="?week=34system/week20" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week20">W20: プロトタイプ開発開始</a>
+            <a href="?week=34system/week21" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week21">W21-23: 集中開発＆エラー辞典</a>
+            <a href="?week=34system/week24" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week24">W24: 相互QAテスト(破壊)</a>
+            <a href="?week=34system/week25" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week25">W25: 最終お化粧・締切</a>
+            <a href="?week=34system/week26" class="week-link block px-3 py-2 rounded-md text-sm font-medium transition-colors text-slate-600 hover:bg-purple-50 hover:text-purple-600" data-week="34system/week26">W26: 成果発表会本番！</a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100 flex items-center bg-slate-50">
+            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm">生</div>
+            <span class="ml-3 text-sm font-medium text-slate-700">受講生</span>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 bg-slate-50 overflow-y-auto w-full">
+        <!-- スマホ用ヘッダー -->
+        <div class="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <h2 class="text-lg font-bold text-purple-600">プログラミング 生徒モード</h2>
+            <button id="menu-toggle" class="text-slate-500 hover:text-slate-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- コンテンツ表示エリア -->
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <article
+                id="markdown-content"
+                class="prose prose-slate prose-lg max-w-none
+                       prose-headings:font-bold prose-headings:text-slate-800
+                       prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2 prose-h2:mt-8
+                       prose-h3:text-xl prose-h3:text-slate-700
+                       prose-p:text-slate-600 prose-p:leading-relaxed
+                       prose-strong:text-slate-800
+                       prose-code:bg-slate-100 prose-code:text-purple-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+                       prose-pre:bg-slate-800 prose-pre:rounded-xl prose-pre:shadow-lg
+                       prose-table:text-sm prose-th:bg-slate-100 prose-th:font-semibold prose-td:border prose-td:border-slate-200
+                       prose-blockquote:border-l-purple-400 prose-blockquote:bg-purple-50 prose-blockquote:py-1 prose-blockquote:not-italic
+                       prose-ul:text-slate-600 prose-li:marker:text-purple-500
+                       bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-8 md:p-10
+                ">
+                <!-- ウェルカム画面 -->
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-800 mb-3">プログラミングへようこそ！</h1>
+                    <p class="text-slate-500 text-lg mb-8">左のメニューから学習したいWeekを選んでください。</p>
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto text-left">
+                        <a href="?week=34system/week01" class="block p-4 bg-purple-50 rounded-xl border border-purple-100 hover:border-purple-300 transition-colors">
+                            <div class="text-xs text-purple-500 font-semibold mb-1">W1 基礎</div>
+                            <div class="text-sm font-medium text-slate-700">変数とデータ型</div>
+                        </a>
+                        <a href="?week=34system/week02" class="block p-4 bg-purple-50 rounded-xl border border-purple-100 hover:border-purple-300 transition-colors">
+                            <div class="text-xs text-purple-500 font-semibold mb-1">W2 基礎</div>
+                            <div class="text-sm font-medium text-slate-700">入力と計算</div>
+                        </a>
+                        <a href="?week=34system/week09" class="block p-4 bg-indigo-50 rounded-xl border border-indigo-100 hover:border-indigo-300 transition-colors">
+                            <div class="text-xs text-indigo-500 font-semibold mb-1">W9 DB</div>
+                            <div class="text-sm font-medium text-slate-700">データベース</div>
+                        </a>
+                        <a href="?week=34system/week17" class="block p-4 bg-indigo-50 rounded-xl border border-indigo-100 hover:border-indigo-300 transition-colors">
+                            <div class="text-xs text-indigo-500 font-semibold mb-1">W17 GUI</div>
+                            <div class="text-sm font-medium text-slate-700">GUI開発</div>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        // モバイルメニュートグル
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        function loadProgrammingContent() {
+            const week = new URLSearchParams(window.location.search).get('week') || '34system/week01';
+
+            const url = `content/${week}/student.md`;
+            loadMarkdown(url, 'markdown-content');
+
+            // ナビリンクのアクティブ状態を更新
+            document.querySelectorAll('.week-link').forEach(link => {
+                if (link.dataset.week === week) {
+                    link.classList.add('bg-purple-50', 'text-purple-700', 'font-semibold');
+                    link.classList.remove('text-slate-600');
+                } else {
+                    link.classList.remove('bg-purple-50', 'text-purple-700', 'font-semibold');
+                    link.classList.add('text-slate-600');
+                }
+                // スマホでリンク選択時にメニューを閉じる
+                link.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                });
+            });
+
+            // コードのコピー禁止
+            const contentArea = document.getElementById('markdown-content');
+            contentArea.addEventListener('copy', (e) => {
+                const selection = window.getSelection();
+                const selectedElement = selection.anchorNode?.parentElement;
+                if (selectedElement?.closest('pre, code')) {
+                    e.preventDefault();
+                }
+            });
+            contentArea.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('pre, code')) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadProgrammingContent);
+    </script>
+</body>
+</html>

@@ -141,13 +141,45 @@ id | name     | grade      ← これら全部が「カラム」
 > **💡 覚え方のコツ**
 > 
 > - **テーブル**：「表」全体（1つの表データ）
-> - **カラム**：「縦」（Column = Column = 縦方向）
+> - **カラム**：「縦」（Column = 縦方向）
 > - **レコード**：「横」「1件」（Record = 記録・1つの記録）
 > 
 > 「クラスの名簿Excel」で例えると：
 > - テーブル = シート全体
 > - カラム = 「出席番号」「名前」「生年月日」...（列タイトル）
 > - レコード = 「太郎君のデータ」「花子さんのデータ」...（1行分）
+
+### ✍️ ドリル 1-1：用語を確認しよう
+
+以下の「敵キャラクター」のテーブルを見て、答えてください。
+
+```
+【enemies テーブル】
+id | name       | type | hp
+---|------------|------|-----
+1  | スライム   | 水   | 20
+2  | ゴブリン   | 土   | 40
+3  | ドラゴン   | 炎   | 300
+```
+
+**Q1.** このデータ全体の名前は？（テーブル/カラム/レコード のどれ？）
+**A.** enemies テーブル
+
+**Q2.** 「name」「type」「hp」などの、**縦の項目**を何と呼ぶ？
+**A.** カラム（列）
+
+**Q3.** 「スライム」「水」「20」をまとめた、1つの敵の全データを何と呼ぶ？
+**A.** レコード（行）
+
+### ✍️ ドリル 1-2：新しいテーブルを考える
+
+「ゲームの武器データ」を管理するテーブルを作るとしたら、どんなカラムが必要か考えてみましょう。
+
+例：
+- `id`：武器の ID
+- `name`：武器の名前
+- `damage`：攻撃力（数字）
+- `element`：属性（炎・水など）
 
 ---
 
@@ -351,6 +383,61 @@ CREATE TABLE heroes (
 > - [ ] 各行の末尾に `,`（カンマ）がある？（最後の hp INTEGER の後にはない）
 > - [ ] 最後にセミコロン `;` がある？
 
+### ⚠️ CREATE TABLE のよくあるミス（BEST 3）
+
+```sql
+❌ ミス1：セミコロンを忘れる
+CREATE TABLE students (
+    id INTEGER,
+    name TEXT,
+    grade INTEGER
+)  ← セミコロンがない → エラー！
+
+❌ ミス2：最後のカラムの後にカンマをつける
+CREATE TABLE students (
+    id INTEGER,
+    name TEXT,
+    grade INTEGER,  ← 最後のカンマは不要
+);
+
+❌ ミス3：データ型を忘れる
+CREATE TABLE students (
+    id,         ← INTEGER がない → エラー！
+    name TEXT,
+    grade INTEGER
+);
+```
+
+**覚え方：「最後のカンマはなし、セミコロンはあり」**
+
+### ✍️ ドリル 2-2：武器テーブルを作ってみよう
+
+さきほど計画した「武器データ」テーブルを実際に作ってください。
+
+```sql
+CREATE TABLE weapons (
+    id INTEGER,
+    name TEXT,
+    damage INTEGER,
+    element TEXT
+);
+```
+
+**実行後：** `.schema weapons` でテーブルが作られたか確認しましょう！
+
+### ✍️ ドリル 2-3：新しいテーブル「items」を設計・作成
+
+ゲームの「消耗品」を管理するテーブルを作ってください。
+カラムは：`id`、`name`、`cost`（値段）
+
+```sql
+CREATE TABLE items (
+    id INTEGER,
+    name TEXT,
+    cost INTEGER
+);
+```
+
 ---
 
 ---
@@ -468,6 +555,24 @@ id | name     | grade
 
 ---
 
+### ⚠️ INSERT のよくあるミス（BEST 3）
+
+```sql
+❌ ミス1：TEXT をシングル引用符で囲まない
+INSERT INTO heroes (id, name, hp) VALUES (1, アーサー, 100);
+                                            ↑ 引用符なし → エラー！
+
+❌ ミス2：ダブル引用符を使う（SQLはシングルのみ）
+INSERT INTO heroes (id, name, hp) VALUES (1, "アーサー", 100);
+                                            ↑↑ ダブルはNG
+
+❌ ミス3：セミコロンを忘れる
+INSERT INTO heroes (id, name, hp) VALUES (1, 'アーサー', 100)
+                                        ↑ セミコロン必須！
+```
+
+**覚え方：「TEXT は ' で囲む、文の終わりに ; 」**
+
 ### ✍️ ドリル 3-1：勇者を追加しよう（ステップバイステップ）
 
 ドリル2-1で作った `heroes` テーブルに、データを入れていきます。
@@ -512,6 +617,34 @@ id | name         | hp
 > - [ ] セミコロン `;` を忘れずに付けた？
 > - [ ] INSERT INTO、VALUES の順番は間違っていない？
 > - [ ] SELECT で表が表示された？
+
+### ✍️ ドリル 3-2：武器を追加しよう
+
+ドリル2-2で作った `weapons` テーブルに、3つの武器を追加してください。
+
+```sql
+INSERT INTO weapons (id, name, damage, element) VALUES (1, 'ロングソード', 50, '通常');
+INSERT INTO weapons (id, name, damage, element) VALUES (2, '炎の剣', 60, '炎');
+INSERT INTO weapons (id, name, damage, element) VALUES (3, 'アイスブレード', 55, '水');
+
+SELECT * FROM weapons;
+```
+
+> **期待結果：** 3つの武器が表として表示される
+
+### ✍️ ドリル 3-3：アイテムを3個追加
+
+ドリル2-3で作った `items` テーブルに、3つの消耗品を追加してください。
+
+```sql
+INSERT INTO items (id, name, cost) VALUES (1, 'ポーション', 100);
+INSERT INTO items (id, name, cost) VALUES (2, 'ハイポーション', 300);
+INSERT INTO items (id, name, cost) VALUES (3, 'フルポーション', 1000);
+
+SELECT * FROM items;
+```
+
+> **チェック：** テーブルに3行のデータが表示された？
 
 ---
 

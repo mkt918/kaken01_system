@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W1-2 - f-string 完全ガイド スライド資料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* スライドのテーマカラー */
+        .slide-title {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .slide-content {
+            background: white;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #f5576c;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #f093fb;
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+        }
+
+        .content-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* インフォグラフィック */
+        .infographic {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 6px solid #f5576c;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .code-box {
+            background: #f0f2f5;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #333;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #f5576c;
+            line-height: 1.6;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-box {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .good {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .bad {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .comparison-label {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .comparison-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* 方法比較表 */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .method-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .method-title {
+            font-size: 1em;
+            font-weight: bold;
+            color: #f5576c;
+            margin-bottom: 8px;
+        }
+
+        .method-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        .method-mark {
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .mark-good {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .mark-bad {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: #f5576c;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* フォーマット指定例 */
+        .format-examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .format-box {
+            background: #f0f2f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .format-label {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #f5576c;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .format-output {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* ナビゲーション */
+        .controls {
+            background: #f5f5f5;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        button {
+            background: #f5576c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #f093fb;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.1em;
+            color: #f5576c;
+            font-weight: bold;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: #f5576c;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .content-text {
+                font-size: 1.1em;
+            }
+
+            .infographic {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .method-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .format-examples {
+                grid-template-columns: 1fr;
+            }
+
+            .code-box {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- スライド 1: タイトル -->
+        <div class="slide slide-title active">
+            <h1>f-string 完全ガイド</h1>
+            <p class="subtitle">変数を文章に埋め込むスマートな方法</p>
+            <div style="margin-top: 60px; color: white; font-size: 1.2em;">
+                <p>📚 Week 01-2: システム開発コース</p>
+                <p style="margin-top: 20px;">Pythonで最も読みやすく、強力な文字列操作方法を完全マスター</p>
+            </div>
+        </div>
+
+        <!-- スライド 2: f-stringとは -->
+        <div class="slide slide-content">
+            <h2>f-string とは？</h2>
+            <div class="content-text">
+                f-stringは、文字列の先頭に <code>f</code> をつけることで、<code>{}</code> の中に変数や式を直接埋め込める仕組みです。
+            </div>
+            <div class="code-box">name = "田中"
+age = 16
+
+print(f"名前：{name}")      # 名前：田中
+print(f"年齢：{age}歳")    # 年齢：16歳</div>
+            <div style="margin-top: 30px; background: #e8f5e9; padding: 20px; border-radius: 10px; border-left: 4px solid #4caf50;">
+                <strong style="color: #2e7d32;">✅ 最も読みやすく、シンプル！</strong>
+            </div>
+        </div>
+
+        <!-- スライド 3: 方法の比較1 -->
+        <div class="slide slide-content">
+            <h2>他の方法との比較（1/2）</h2>
+            <div class="method-grid">
+                <div class="method-box">
+                    <div class="method-title">❌ カンマ区切り</div>
+                    <div class="method-code">print("名前：", name)</div>
+                    <div class="method-mark mark-bad">余分なスペース</div>
+                </div>
+                <div class="method-box">
+                    <div class="method-title">❌ + で連結</div>
+                    <div class="method-code">print("名前：" + str(name))</div>
+                    <div class="method-mark mark-bad">型変換が手間</div>
+                </div>
+                <div class="method-box">
+                    <div class="method-title">❌ % フォーマット</div>
+                    <div class="method-code">print("名前：%s" % name)</div>
+                    <div class="method-mark mark-bad">書き方が複雑</div>
+                </div>
+                <div class="method-box">
+                    <div class="method-title">❌ .format() メソッド</div>
+                    <div class="method-code">print("名前：{}".format(name))</div>
+                    <div class="method-mark mark-bad">対応が面倒</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 4: 方法の比較2 -->
+        <div class="slide slide-content">
+            <h2>他の方法との比較（2/2）</h2>
+            <div style="margin-top: 40px;">
+                <div class="method-box good" style="padding: 30px; text-align: center; font-size: 1.2em;">
+                    <div class="method-title mark-good">✅ f-string（推奨）</div>
+                    <div class="method-code" style="font-size: 1.1em; margin-top: 15px;">print(f"名前：{name} 年齢：{age}歳")</div>
+                    <div class="mark-good" style="margin-top: 15px; font-size: 1.1em;">最も読みやすく、シンプル！</div>
+                </div>
+            </div>
+            <div style="margin-top: 40px; background: #fff3e0; padding: 20px; border-radius: 10px; border-left: 4px solid #ff6f00;">
+                <strong style="color: #e65100;">💡 Python 3.6以降では f-string が標準。これを使おう！</strong>
+            </div>
+        </div>
+
+        <!-- スライド 5: {} の中に何が入るか -->
+        <div class="slide slide-content">
+            <h2>{} の中には何が入る？</h2>
+            <div class="infographic">
+                <div class="card">
+                    <div class="card-title">① 変数</div>
+                    <div class="card-content">
+                        <code style="color: #333;">f"点数：{score}"</code>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">② 式（計算）</div>
+                    <div class="card-content">
+                        <code style="color: #333;">f"合計：{x + y}"</code>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">③ メソッド呼び出し</div>
+                    <div class="card-content">
+                        <code style="color: #333;">f"大文字：{text.upper()}"</code>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">④ 条件式</div>
+                    <div class="card-content">
+                        <code style="color: #333;">f"成人：{age >= 18}"</code>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; background: #f3e5f5; padding: 15px; border-radius: 10px;">
+                <strong style="color: #6a1b9a;">💡 {} の中は「Pythonコード」として評価されます。計算も式も使えます！</strong>
+            </div>
+        </div>
+
+        <!-- スライド 6: フォーマット指定子 -->
+        <div class="slide slide-content">
+            <h2>フォーマット指定子 ― 細かく制御</h2>
+            <div class="content-text">
+                <code>:</code> の後に指定子を書くと、表示方法を細かく制御できます。
+            </div>
+            <div class="code-box">値 = 100
+print(f"{値:5}")    # フォーマット指定子：「5」</div>
+            <table>
+                <tr>
+                    <th>指定子</th>
+                    <th>意味</th>
+                    <th>例</th>
+                    <th>出力</th>
+                </tr>
+                <tr>
+                    <td><code>&gt;</code></td>
+                    <td>右寄せ</td>
+                    <td><code>f"{name:&gt;8}"</code></td>
+                    <td>右に配置</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;</code></td>
+                    <td>左寄せ</td>
+                    <td><code>f"{name:&lt;8}"</code></td>
+                    <td>左に配置</td>
+                </tr>
+                <tr>
+                    <td><code>^</code></td>
+                    <td>中央寄せ</td>
+                    <td><code>f"{name:^8}"</code></td>
+                    <td>中央に配置</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- スライド 7: 寄せ方の実践例 -->
+        <div class="slide slide-content">
+            <h2>右寄せ・左寄せの実践例</h2>
+            <div class="comparison">
+                <div style="padding: 20px; background: #f0f2f5; border-radius: 10px;">
+                    <strong>左寄せ（商品名）</strong>
+                    <div class="code-box" style="margin-top: 10px; margin-bottom: 0;">item1 = "りんご"
+item2 = "バナナ"
+
+print(f"{item1:&lt;8} 150円")
+print(f"{item2:&lt;8} 120円")</div>
+                    <div style="margin-top: 10px; color: #333; font-family: monospace;">りんご       150円<br>バナナ       120円</div>
+                </div>
+                <div style="padding: 20px; background: #f0f2f5; border-radius: 10px;">
+                    <strong>右寄せ（金額）</strong>
+                    <div class="code-box" style="margin-top: 10px; margin-bottom: 0;">name1 = "太郎"
+price1 = 1500
+
+print(f"{name1:&gt;8} {price1:&gt;6}円")</div>
+                    <div style="margin-top: 10px; color: #333; font-family: monospace;">     太郎   1500円</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 8: ゼロ埋め -->
+        <div class="slide slide-content">
+            <h2>ゼロ埋め（パディング）</h2>
+            <div class="content-text">
+                数字の前にゼロを詰めたい場合（例：学籍番号、日時）に使います。
+            </div>
+            <div class="format-examples">
+                <div class="format-box">
+                    <div class="format-label">{7:03d}</div>
+                    <div class="format-output">007</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{4:05d}</div>
+                    <div class="format-output">00004</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{month:02d}</div>
+                    <div class="format-output">04</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{day:02d}</div>
+                    <div class="format-output">21</div>
+                </div>
+            </div>
+            <div class="code-box" style="margin-top: 30px;">year = 2026
+month = 4
+day = 21
+print(f"日付：{year}-{month:02d}-{day:02d}")  # 2026-04-21</div>
+        </div>
+
+        <!-- スライド 9: 桁区切り -->
+        <div class="slide slide-content">
+            <h2>桁区切り（カンマ区切り）</h2>
+            <div class="content-text">
+                大きな数字を見やすくするために、千の位にカンマを自動挿入します。
+            </div>
+            <div class="format-examples">
+                <div class="format-box">
+                    <div class="format-label">1500000</div>
+                    <div class="format-output">1500000</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{1500000:,}</div>
+                    <div class="format-output">1,500,000</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">125000000</div>
+                    <div class="format-output">125000000</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{125000000:,}</div>
+                    <div class="format-output">125,000,000</div>
+                </div>
+            </div>
+            <div class="code-box" style="margin-top: 30px;">price = 1500000
+population = 125000000
+print(f"価格：{price:,}円")            # 価格：1,500,000円
+print(f"人口：{population:,}人")       # 人口：125,000,000人</div>
+        </div>
+
+        <!-- スライド 10: 小数点指定 -->
+        <div class="slide slide-content">
+            <h2>小数点以下の桁数を指定</h2>
+            <div class="content-text">
+                小数をどこまで表示するかを指定できます。
+            </div>
+            <div class="format-examples">
+                <div class="format-box">
+                    <div class="format-label">{3.14159:.2f}</div>
+                    <div class="format-output">3.14</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{3.14159:.4f}</div>
+                    <div class="format-output">3.1416</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{85.333333:.1f}</div>
+                    <div class="format-output">85.3</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{85.333333:.0f}</div>
+                    <div class="format-output">85</div>
+                </div>
+            </div>
+            <div class="code-box" style="margin-top: 30px;">pi = 3.141592653589793
+print(f"π = {pi}")          # π = 3.141592653589793
+print(f"π = {pi:.2f}")      # π = 3.14
+print(f"π = {pi:.4f}")      # π = 3.1416</div>
+        </div>
+
+        <!-- スライド 11: パーセント表記 -->
+        <div class="slide slide-content">
+            <h2>パーセント表記</h2>
+            <div class="content-text">
+                <code>.1%</code> を使うと、自動的に100倍されてパーセント記号がつきます。
+            </div>
+            <div class="format-examples">
+                <div class="format-box">
+                    <div class="format-label">{0.85:.1%}</div>
+                    <div class="format-output">85.0%</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{0.8765:.2%}</div>
+                    <div class="format-output">87.65%</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{0.333:.0%}</div>
+                    <div class="format-output">33%</div>
+                </div>
+                <div class="format-box">
+                    <div class="format-label">{0.99:.1%}</div>
+                    <div class="format-output">99.0%</div>
+                </div>
+            </div>
+            <div class="code-box" style="margin-top: 30px;">score = 85
+max_score = 100
+percentage = score / max_score
+
+print(f"得点率：{percentage:.1%}")      # 得点率：85.0%</div>
+        </div>
+
+        <!-- スライド 12: 実践例1 -->
+        <div class="slide slide-content">
+            <h2>実践例① ― 店舗の売上レシート</h2>
+            <div class="code-box" style="font-size: 0.85em;">item = "ノート"
+quantity = 3
+unit_price = 150
+subtotal = quantity * unit_price
+discount = subtotal * 0.1
+total = subtotal - discount
+
+print(f"{item:&lt;12} {quantity:&gt;4}個 {unit_price:&gt;6}円")
+print(f"{'小計':&gt;24} {subtotal:&gt;8}円")
+print(f"{'割引(10%)':&gt;24} {discount:&gt;8.0f}円")
+print(f"{'合計':&gt;24} {total:&gt;8.0f}円")</div>
+            <div style="margin-top: 20px; background: #f0f2f5; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 0.95em;">
+ノート         3個    150円      450円<br>
+                    小計      450円<br>
+                割引(10%)       45円<br>
+                    合計      405円
+            </div>
+        </div>
+
+        <!-- スライド 13: 実践例2 -->
+        <div class="slide slide-content">
+            <h2>実践例② ― 成績報告書</h2>
+            <div class="code-box" style="font-size: 0.8em;">student_name = "田中 太郎"
+japanese = 78
+math = 92
+science = 85
+english = 88
+average = (japanese + math + science + english) / 4
+
+print(f"{'学生氏名':<15}: {student_name}")
+print(f"{'国語':<15}: {japanese:>3}点")
+print(f"{'数学':<15}: {math:>3}点")
+print(f"{'理科':<15}: {science:>3}点")
+print(f"{'英語':<15}: {english:>3}点")
+print(f"{'平均':<15}: {average:>6.1f}点")</div>
+            <div style="margin-top: 15px; background: #f0f2f5; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 0.9em; line-height: 1.5;">
+学生氏名       : 田中 太郎<br>
+国語           :  78点<br>
+数学           :  92点<br>
+理科           :  85点<br>
+英語           :  88点<br>
+平均           :  85.8点
+            </div>
+        </div>
+
+        <!-- スライド 14: W1-2のポイント -->
+        <div class="slide slide-content">
+            <h2>W1-2 - 大切なポイント</h2>
+            <div class="infographic">
+                <div class="card">
+                    <div class="card-title">① f-stringの基本</div>
+                    <div class="card-content">
+                        先頭に <code>f</code>、変数を <code>{}</code> で囲む
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">② {} の中は式</div>
+                    <div class="card-content">
+                        計算、メソッド、条件式も使える
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">③ フォーマット指定</div>
+                    <div class="card-content">
+                        <code>:</code> で寄せ、幅、小数点を制御
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">④ 実践活用</div>
+                    <div class="card-content">
+                        レシート、報告書などの整形出力
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 15: まとめ -->
+        <div class="slide slide-title">
+            <h1>マスター完了！</h1>
+            <p class="subtitle">f-stringで美しい出力を実現しよう</p>
+            <div style="margin-top: 60px; color: white; font-size: 1.2em;">
+                <p>🎯 変数の埋め込みから、整形まで全て対応</p>
+                <p style="margin-top: 30px; font-size: 1em; opacity: 0.9;">次は実際にプログラムで活用します</p>
+            </div>
+        </div>
+
+        <!-- コントロール -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← 前へ</button>
+            <div class="slide-dots" id="dots"></div>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">15</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">次へ →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // ドット生成
+        const dotsContainer = document.getElementById('dots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+
+            document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+            document.querySelectorAll('.dot')[n].classList.add('active');
+
+            document.getElementById('currentSlide').textContent = n + 1;
+            document.getElementById('prevBtn').disabled = n === 0;
+            document.getElementById('nextBtn').disabled = n === totalSlides - 1;
+
+            currentSlide = n;
+        }
+
+        function changeSlide(direction) {
+            let newSlide = currentSlide + direction;
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                goToSlide(newSlide);
+            }
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // 初期化
+        showSlide(0);
+    </script>
+</body>
+</html>

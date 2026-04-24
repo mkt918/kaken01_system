@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W1 - プログラミングの第一歩 スライド資料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* スライドのテーマカラー */
+        .slide-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .slide-content {
+            background: white;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #764ba2;
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+        }
+
+        .content-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* インフォグラフィック */
+        .infographic {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .code-box {
+            background: #f0f2f5;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            color: #333;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-box {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .good {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .bad {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .comparison-label {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .comparison-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            color: #333;
+        }
+
+        /* 型の説明 */
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .type-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .type-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .type-example {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        /* 矢印デモ */
+        .variable-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 40px 0;
+        }
+
+        .box {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 25px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .label {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #764ba2;
+            margin: 0 20px;
+        }
+
+        /* ナビゲーション */
+        .controls {
+            background: #f5f5f5;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.1em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: #667eea;
+        }
+
+        /* フローテンプレート */
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .flow-box {
+            background: #667eea;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: 1.8em;
+            color: #764ba2;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* アニメーション */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .content-text {
+                font-size: 1.1em;
+            }
+
+            .infographic {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- スライド 1: タイトル -->
+        <div class="slide slide-title active">
+            <h1>プログラミングの第一歩</h1>
+            <p class="subtitle">「変数」でデータを覚えさせよう</p>
+            <div style="margin-top: 60px; color: white; font-size: 1.2em;">
+                <p>📚 Week 01: システム開発コース</p>
+                <p style="margin-top: 20px;">コンピュータに「情報を覚えさせる」仕組みを学びます</p>
+            </div>
+        </div>
+
+        <!-- スライド 2: 今週の学習内容 -->
+        <div class="slide slide-content">
+            <h2>今週の学習内容</h2>
+            <div class="infographic">
+                <div class="card">
+                    <div class="card-title">🖨️ print()</div>
+                    <div class="card-content">画面に文字や数字を表示する方法を学びます</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">📦 変数</div>
+                    <div class="card-content">データを入れておく「名前付きの箱」を使いこなす</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">🏷️ データ型</div>
+                    <div class="card-content">整数、小数、文字列など、データの種類を理解</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">✨ f-string</div>
+                    <div class="card-content">変数を文章に埋め込むスマートな方法</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 3: print()の基本 -->
+        <div class="slide slide-content">
+            <h2>print() ― 画面に表示する</h2>
+            <div class="content-text">
+                プログラムの基本中の基本。コンピュータに「何か言わせる」ことができます。
+            </div>
+            <div class="code-box">print("こんにちは！")
+print("プログラミングの世界へようこそ。")</div>
+            <div style="margin-top: 30px; background: #f0f2f5; padding: 20px; border-radius: 10px;">
+                <strong>実行結果：</strong><br>
+                こんにちは！<br>
+                プログラミングの世界へようこそ。
+            </div>
+        </div>
+
+        <!-- スライド 4: print()応用 -->
+        <div class="slide slide-content">
+            <h2>print()の応用 ― カンマで複数表示</h2>
+            <div class="content-text">
+                カンマ（,）で区切ると、複数の値をスペース付きで表示できます。
+            </div>
+            <div class="code-box">print("私の年齢は", 17, "歳です。")
+print("3 + 5 =", 3 + 5)</div>
+            <div style="margin-top: 30px; background: #f0f2f5; padding: 20px; border-radius: 10px;">
+                <strong>実行結果：</strong><br>
+                私の年齢は 17 歳です。<br>
+                3 + 5 = 8
+            </div>
+        </div>
+
+        <!-- スライド 5: 変数とは -->
+        <div class="slide slide-content">
+            <h2>変数 ― コンピュータの「メモ帳」</h2>
+            <div class="content-text">
+                変数は「名前付きの箱」。一度入れたデータは何度でも使えます。
+            </div>
+            <div class="variable-box">
+                <div>
+                    <div class="box">山田 太郎</div>
+                    <div class="label">データ</div>
+                </div>
+                <div class="arrow">→</div>
+                <div>
+                    <div class="box">name</div>
+                    <div class="label">変数名</div>
+                </div>
+            </div>
+            <div class="code-box">name = "山田 太郎"
+print(name)  # 山田 太郎</div>
+        </div>
+
+        <!-- スライド 6: 変数名のルール -->
+        <div class="slide slide-content">
+            <h2>変数名のルール</h2>
+            <div class="comparison">
+                <div class="comparison-box good">
+                    <div class="comparison-label">✅ OK</div>
+                    <div class="comparison-code">score<br>player_name<br>my_score2</div>
+                </div>
+                <div class="comparison-box bad">
+                    <div class="comparison-label">❌ NG</div>
+                    <div class="comparison-code">1score<br>player name<br>my-score</div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; font-size: 1.1em; color: #555; line-height: 1.8;">
+                • 数字から始められない<br>
+                • スペースは使えない<br>
+                • Pythonの予約語（if, for など）は使えない<br>
+                • ハイフン（-）は使えない
+            </div>
+        </div>
+
+        <!-- スライド 7: データ型 -->
+        <div class="slide slide-content">
+            <h2>データの種類（型）</h2>
+            <div class="type-grid">
+                <div class="type-box">
+                    <div class="type-name">整数（int）</div>
+                    <div>小数点なしの数</div>
+                    <div class="type-example">10, -3, 0</div>
+                </div>
+                <div class="type-box">
+                    <div class="type-name">小数（float）</div>
+                    <div>小数点ありの数</div>
+                    <div class="type-example">3.14, -0.5, 2.0</div>
+                </div>
+                <div class="type-box">
+                    <div class="type-name">文字列（str）</div>
+                    <div>""または''で囲った文字</div>
+                    <div class="type-example">"hello", "ABC"</div>
+                </div>
+                <div class="type-box">
+                    <div class="type-name">真偽値（bool）</div>
+                    <div>正（True）か偽（False）</div>
+                    <div class="type-example">True, False</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 8: 型の確認 -->
+        <div class="slide slide-content">
+            <h2>型を確認する type()</h2>
+            <div class="content-text">
+                どんな型か分からないときは type() で確認できます。
+            </div>
+            <div class="code-box">x = 42
+y = 3.14
+z = "こんにちは"
+
+print(type(x))   # &lt;class 'int'&gt;
+print(type(y))   # &lt;class 'float'&gt;
+print(type(z))   # &lt;class 'str'&gt;</div>
+        </div>
+
+        <!-- スライド 9: 文字列の演算 -->
+        <div class="slide slide-content">
+            <h2>文字列の「足し算」と「掛け算」</h2>
+            <div class="comparison">
+                <div style="padding: 20px; background: #f0f2f5; border-radius: 10px;">
+                    <strong>足し算（結合）</strong>
+                    <div class="code-box" style="margin-top: 10px;">a = "Hello"
+b = " World"
+print(a + b)</div>
+                    <div style="margin-top: 10px; color: #333;">→ Hello World</div>
+                </div>
+                <div style="padding: 20px; background: #f0f2f5; border-radius: 10px;">
+                    <strong>掛け算（繰り返し）</strong>
+                    <div class="code-box" style="margin-top: 10px;">a = "Hello"
+print(a * 3)</div>
+                    <div style="margin-top: 10px; color: #333;">→ HelloHelloHello</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 10: f-string -->
+        <div class="slide slide-content">
+            <h2>f-string ― 変数を文章に埋め込む</h2>
+            <div class="content-text">
+                f をつけて {} で囲むと、変数を簡単に埋め込めます。
+            </div>
+            <div class="code-box">name = "田中"
+age = 16
+score = 87.5
+
+print(f"名前：{name}")
+print(f"年齢：{age}歳")
+print(f"点数：{score}点")</div>
+            <div style="margin-top: 20px; background: #f0f2f5; padding: 15px; border-radius: 10px;">
+                <strong>実行結果：</strong><br>
+                名前：田中<br>
+                年齢：16歳<br>
+                点数：87.5点
+            </div>
+        </div>
+
+        <!-- スライド 11: f-string応用 -->
+        <div class="slide slide-content">
+            <h2>f-string ― 式も書ける</h2>
+            <div class="content-text">
+                {} の中に計算式を書くこともできます。
+            </div>
+            <div class="code-box">price = 1500
+tax_rate = 0.10
+
+print(f"税込価格：{price * (1 + tax_rate)}円")
+print(f"消費税額：{price * tax_rate}円")</div>
+            <div style="margin-top: 20px; background: #f0f2f5; padding: 15px; border-radius: 10px;">
+                <strong>実行結果：</strong><br>
+                税込価格：1650円<br>
+                消費税額：150.0円
+            </div>
+        </div>
+
+        <!-- スライド 12: 演算子の優先順位 -->
+        <div class="slide slide-content">
+            <h2>演算子の優先順位</h2>
+            <table>
+                <tr>
+                    <th>演算子</th>
+                    <th>説明</th>
+                    <th>例</th>
+                    <th>結果</th>
+                </tr>
+                <tr>
+                    <td>( )</td>
+                    <td>括弧</td>
+                    <td>(2 + 3) * 4</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>** , * , / , //</td>
+                    <td>べき乗、掛け算、割り算</td>
+                    <td>2 + 3 * 4</td>
+                    <td>14</td>
+                </tr>
+                <tr>
+                    <td>+ , -</td>
+                    <td>足し算、引き算</td>
+                    <td>10 + 5 - 3</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>%</td>
+                    <td>割った余り</td>
+                    <td>10 % 3</td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- スライド 13: W1の大切なポイント -->
+        <div class="slide slide-content">
+            <h2>W1 - 大切なポイント</h2>
+            <div class="infographic">
+                <div class="card">
+                    <div class="card-title">① 出力できる</div>
+                    <div class="card-content">print()で画面に何かを表示できます</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">② データを覚える</div>
+                    <div class="card-content">変数に入れたデータは何度でも使える</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">③ 型を理解する</div>
+                    <div class="card-content">整数、小数、文字列で動作が変わる</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">④ スマート表示</div>
+                    <div class="card-content">f-stringで変数を簡単に埋め込める</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド 14: まとめ -->
+        <div class="slide slide-title">
+            <h1>準備完了！</h1>
+            <p class="subtitle">では、レッスン 1 から始めましょう</p>
+            <div style="margin-top: 60px; color: white; font-size: 1.2em;">
+                <p>💪 あなたはもうプログラマー！</p>
+                <p style="margin-top: 30px; font-size: 1em; opacity: 0.9;">次は実際にコードを書いてみます</p>
+            </div>
+        </div>
+
+        <!-- コントロール -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← 前へ</button>
+            <div class="slide-dots" id="dots"></div>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">次へ →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // ドット生成
+        const dotsContainer = document.getElementById('dots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+
+            document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+            document.querySelectorAll('.dot')[n].classList.add('active');
+
+            document.getElementById('currentSlide').textContent = n + 1;
+            document.getElementById('prevBtn').disabled = n === 0;
+            document.getElementById('nextBtn').disabled = n === totalSlides - 1;
+
+            currentSlide = n;
+        }
+
+        function changeSlide(direction) {
+            let newSlide = currentSlide + direction;
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                goToSlide(newSlide);
+            }
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // 初期化
+        showSlide(0);
+    </script>
+</body>
+</html>

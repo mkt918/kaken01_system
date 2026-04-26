@@ -1,9 +1,15 @@
 # Week 01-2: 文字の出力 ― f-string 完全ガイド
 
-> 📊 **スライド資料を先に見ましょう！**：[W1-2 - インタラクティブスライド](./slides.html) で、f-stringの全機能を視覚的に理解できます。
-
 f-string（フォーマット済み文字列リテラル）は、Pythonで変数を文字に埋め込む最も強力で柔軟な方法です。
 このセクションでは、基本から応用的なフォーマット方法まで、詳しく解説します。
+
+## 📊 インタラクティブスライド資料
+
+まずこちらのスライドを見て、f-stringの全機能を視覚的に理解しましょう。左右の矢印キーまたはボタンでスライドを進めます。
+
+<div style="width: 100%; max-width: 100%; margin: 30px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+<iframe src="./slides.html" style="width: 100%; height: 600px; border: none;"></iframe>
+</div>
 
 ---
 

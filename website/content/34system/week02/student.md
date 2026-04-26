@@ -1,8 +1,14 @@
 # Week 02: 対話型アプリへの第一歩 ― 「入力」と「計算」
 
-> 📊 **スライド資料を先に見ましょう！**：[W2 - インタラクティブスライド](./slides.html) で、input()と演算子を視覚的に理解できます。
-
 今週は、プログラムを使う人（ユーザー）から情報を聞き出す「**input()**」と、Pythonの計算力を組み合わせて、**対話型アプリ**を作っていきます。
+
+## 📊 インタラクティブスライド資料
+
+まずこちらのスライドを見て、input()と演算子を視覚的に理解しましょう。左右の矢印キーまたはボタンでスライドを進めます。
+
+<div style="width: 100%; max-width: 100%; margin: 30px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+<iframe src="./slides.html" style="width: 100%; height: 600px; border: none;"></iframe>
+</div>
 
 ---
 
